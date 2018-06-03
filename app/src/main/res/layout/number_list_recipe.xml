@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content">
+
+    <TextView
+        style="@style/movieDetail"
+        android:id="@+id/recipe_name_text"/>
+
+
+    <ImageView
+        android:paddingTop="50dp"
+        android:scaleType="fitXY"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_gravity="center|bottom"
+        android:id="@+id/recipe_image"/>
+
+</FrameLayout>
