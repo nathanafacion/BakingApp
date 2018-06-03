@@ -28,6 +28,7 @@
         android:layout_gravity="fill_horizontal"
         android:orientation="horizontal"
         android:padding="10dp"
+        android:id="@+id/buttons_layout"
         >
 
         <Button

@@ -1,43 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment"
+    android:name="com.example.android.bakingapp.DetailRecipeActivityFragment"
+    tools:layout="@layout/detail_fragment"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <LinearLayout
-        android:id="@+id/ll_detail"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <TextView
-            style="@style/movieDetail"
-            android:text="Ingredients"
-            android:textSize="18dp" />
-        <LinearLayout
-            android:id="@+id/ll_ingredient"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:horizontalSpacing="0dp"
-            android:numColumns="1"
-            android:orientation="vertical"
-            android:stretchMode="columnWidth"
-            style="@style/reviewDetail"
-            />
-
-        <TextView
-            style="@style/movieDetail"
-            android:text="Steps"
-            android:textSize="18dp" />
-        <LinearLayout
-
-            android:id="@+id/ll_step"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:horizontalSpacing="0dp"
-            android:numColumns="1"
-            android:orientation="vertical"
-            android:stretchMode="columnWidth"
-            style="@style/reviewDetail"
-            />
-    </LinearLayout>
-</ScrollView>
+    android:layout_height="match_parent"/>

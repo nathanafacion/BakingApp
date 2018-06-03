@@ -1,6 +1,6 @@
 package com.example.android.bakingapp;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -50,7 +50,7 @@ public class StepActivityFragment extends Fragment implements ExoPlayer.EventLis
     static private ArrayList<Step> stepList;
     static private int position;
     static private Recipe recipe;
-
+    private Step step;
     private SimpleExoPlayerView mPlayerView;
     private PlaybackState.Builder mStateBuilder;
 
@@ -89,6 +89,11 @@ public class StepActivityFragment extends Fragment implements ExoPlayer.EventLis
 
     }
 
+    public void setArguments(Step step, int position){
+        this.step = step;
+        this.position = position;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -98,17 +103,23 @@ public class StepActivityFragment extends Fragment implements ExoPlayer.EventLis
         // Initialize the player view.
 
         View rootView = inflater.inflate(R.layout.number_list_step_detail, container, false);
-        if (intentDetailItem != null) {
-            mPlayerView = rootView.findViewById(R.id.playerView);
+        if (intentDetailItem != null && intentDetailItem.hasExtra("position")) {
 
             position = intentDetailItem.getExtras().getInt("position");
             stepList = intentDetailItem.getExtras().getParcelableArrayList("step");
             recipe = intentDetailItem.getExtras().getParcelable("recipe");
-            Step step = stepList.get(position);
+            step = stepList.get(position);
+        }
 
-            if (step.getVideo_url().isEmpty() || step.getVideo_url().length() == 0) {
+        mPlayerView = rootView.findViewById(R.id.playerView);
+        if (step == null){
+            return rootView;
+        }
+
+        if (step.getVideo_url().isEmpty() || step.getVideo_url().length() == 0) {
                 mPlayerView.setVisibility(View.GONE);
             } else {
+                mPlayerView.setVisibility(View.VISIBLE);
                 initializeMediaSession();
                 initializePlayer(Uri.parse(step.getVideo_url()));
             }
@@ -116,30 +127,34 @@ public class StepActivityFragment extends Fragment implements ExoPlayer.EventLis
             TextView description = rootView.findViewById(R.id.tv_step_detail);
             description.setText(step.getDescription());
 
-            Button next = rootView.findViewById(R.id.bt_next);
-            if (position == stepList.size()){
-                next.setVisibility(View.INVISIBLE);
-            }else {
-                next.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        nextStep(v);
-                    }
-                });
-            }
-            Button previous = rootView.findViewById(R.id.bt_previous);
-            if (position == 0){
-                previous.setVisibility(View.INVISIBLE);
+            if(stepList == null){
+                rootView.findViewById(R.id.buttons_layout).setVisibility(View.GONE);
             } else {
-                previous.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        previousStep(v);
-                    }
-                });
+
+                Button next = rootView.findViewById(R.id.bt_next);
+                if (position == stepList.size()-1) {
+                    next.setVisibility(View.INVISIBLE);
+                } else {
+                    next.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            nextStep(v);
+                        }
+                    });
+                }
+                Button previous = rootView.findViewById(R.id.bt_previous);
+                if (position == 0) {
+                    previous.setVisibility(View.INVISIBLE);
+                } else {
+                    previous.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            previousStep(v);
+                        }
+                    });
+                }
             }
 
-        }
         return rootView;
 
     }
@@ -249,8 +264,10 @@ public class StepActivityFragment extends Fragment implements ExoPlayer.EventLis
 
 
     private void releasePlayer() {
-        mExoPlayer.stop();
-        mExoPlayer.release();
-        mExoPlayer = null;
+        if (mExoPlayer!=null) {
+            mExoPlayer.stop();
+            mExoPlayer.release();
+            mExoPlayer = null;
+        }
     }
 }
