@@ -4,6 +4,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,6 +26,7 @@ public class DetailRecipeActivity extends AppCompatActivity implements  DetailRe
     private static final String TAG = DetailRecipeActivity.class.getSimpleName();
     static Recipe recipe;
     private boolean mTwoPane = false;
+    private int stepPosition = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +40,7 @@ public class DetailRecipeActivity extends AppCompatActivity implements  DetailRe
             if (intentDetailItem != null && intentDetailItem.hasExtra("recipe")) {
                 recipe = intentDetailItem.getExtras().getParcelable("recipe");
                 StepActivityFragment newFragment = new StepActivityFragment();
-                newFragment.setArguments(recipe.getSteps().get(0),0);
+                newFragment.setArguments(recipe.getSteps().get(stepPosition),stepPosition);
                 getSupportFragmentManager().beginTransaction().replace(R.id.detail_step_fragment, newFragment).commit();
             }
         }
@@ -46,6 +48,11 @@ public class DetailRecipeActivity extends AppCompatActivity implements  DetailRe
 
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        outState.putInt("stepPosition",stepPosition);
+    }
 
     @Override
     public void onStepSelected(int position, ArrayList<Step> stepList) {
@@ -56,6 +63,7 @@ public class DetailRecipeActivity extends AppCompatActivity implements  DetailRe
             intentMovie.putExtra("position",position);
             startActivity(intentMovie);
         } else {
+            stepPosition = position;
             StepActivityFragment newFragment = new StepActivityFragment();
             newFragment.setArguments(recipe.getSteps().get(position),position);
             getSupportFragmentManager().beginTransaction().replace(R.id.detail_step_fragment, newFragment).commit();

@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,6 +19,7 @@ import com.example.android.bakingapp.utils.Ingredient;
 import com.example.android.bakingapp.utils.Recipe;
 import com.example.android.bakingapp.utils.RecipeWidgetProvider;
 import com.example.android.bakingapp.utils.Step;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -82,6 +84,16 @@ public class DetailRecipeActivityFragment  extends Fragment {
                 id = String.valueOf(steps.get(i).getId());
                 shortDescription = steps.get(i).getShortDescrition();
                 stepView.setText(id + ") " + shortDescription + " ");
+                ImageView thumbnail = reviewLayout.findViewById(R.id.step_thumbnail);
+                if(steps.get(i).getThumbnailUrl() != null && steps.get(i).getThumbnailUrl().isEmpty()== false){
+                    try {
+                        Picasso.with(getContext()).load(steps.get(i).getThumbnailUrl()).into(thumbnail);
+                    } catch (Exception e){
+                        thumbnail.setVisibility(View.GONE);
+                    }
+                } else {
+                    thumbnail.setVisibility(View.GONE);
+                }
                 detailLayoutStep.addView(reviewLayout);
                 final int position = i;
                 stepView.setOnClickListener(new View.OnClickListener() {

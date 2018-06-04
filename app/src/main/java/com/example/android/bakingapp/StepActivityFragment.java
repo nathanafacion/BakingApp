@@ -1,5 +1,7 @@
 package com.example.android.bakingapp;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -53,6 +55,8 @@ public class StepActivityFragment extends Fragment implements ExoPlayer.EventLis
     private Step step;
     private SimpleExoPlayerView mPlayerView;
     private PlaybackState.Builder mStateBuilder;
+    private long playerPosition = 0;
+    private boolean playWhenReady = true;
 
     public StepActivityFragment() {
     }
@@ -100,6 +104,10 @@ public class StepActivityFragment extends Fragment implements ExoPlayer.EventLis
 
         Intent intentDetailItem = getActivity().getIntent();
 
+        if(savedInstanceState != null){
+            playerPosition = savedInstanceState.getLong("playerPosition");
+            playWhenReady = savedInstanceState.getBoolean("playWhenReady");
+        }
         // Initialize the player view.
 
         View rootView = inflater.inflate(R.layout.number_list_step_detail, container, false);
@@ -159,6 +167,13 @@ public class StepActivityFragment extends Fragment implements ExoPlayer.EventLis
 
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putLong("playerPosition", playerPosition);
+        outState.putBoolean("playWhenReady",playWhenReady);
+    }
+
     private void initializeMediaSession() {
         mMediaSession = new MediaSession(getContext(), TAG);
         mMediaSession.setFlags(
@@ -201,8 +216,38 @@ public class StepActivityFragment extends Fragment implements ExoPlayer.EventLis
             MediaSource mediaSource = new ExtractorMediaSource(mediaUri, new DefaultDataSourceFactory(
                     getContext(), userAgent), new DefaultExtractorsFactory(), null, null);
             mExoPlayer.prepare(mediaSource);
-            mExoPlayer.setPlayWhenReady(true);
+            mExoPlayer.seekTo(playerPosition);
+            mExoPlayer.setPlayWhenReady(playWhenReady);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initializeMediaSession();
+        initializePlayer(Uri.parse(step.getVideo_url()));
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null && savedInstanceState.containsKey("playerPosition")){
+            playerPosition = savedInstanceState.getLong("playerPosition");
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        releasePlayer();
+        mMediaSession.setActive(false);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        releasePlayer();
+        mMediaSession.setActive(false);
     }
 
     @Override
@@ -265,6 +310,8 @@ public class StepActivityFragment extends Fragment implements ExoPlayer.EventLis
 
     private void releasePlayer() {
         if (mExoPlayer!=null) {
+            playerPosition = mExoPlayer.getCurrentPosition();
+            playWhenReady = mExoPlayer.getPlayWhenReady();
             mExoPlayer.stop();
             mExoPlayer.release();
             mExoPlayer = null;
