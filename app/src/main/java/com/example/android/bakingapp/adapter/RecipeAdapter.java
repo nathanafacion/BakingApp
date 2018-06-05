@@ -1,4 +1,4 @@
-package com.example.android.bakingapp;
+package com.example.android.bakingapp.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.android.bakingapp.DetailRecipeActivity;
+import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.utils.Recipe;
 import com.squareup.picasso.Picasso;
 

@@ -7,6 +7,8 @@ import android.support.test.runner.AndroidJUnit4;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
+import com.example.android.bakingapp.adapter.RecipeAdapter;
+
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.junit.Rule;

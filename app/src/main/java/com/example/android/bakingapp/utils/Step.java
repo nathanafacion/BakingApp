@@ -6,14 +6,14 @@ import android.os.Parcelable;
 public class Step  implements Parcelable {
 
     private final int id;
-    private final String shortDescrition;
+    private final String shortDescription;
     private final String description;
     private final String video_url;
     private final String thumbnailUrl;
 
-    public Step(int id, String shortDescrition, String description, String video_url, String thumbnailUrl) {
+    public Step(int id, String shortDescription, String description, String video_url, String thumbnailUrl) {
         this.id = id;
-        this.shortDescrition = shortDescrition;
+        this.shortDescription = shortDescription;
         this.description = description;
         this.video_url = video_url;
         this.thumbnailUrl = thumbnailUrl;
@@ -21,7 +21,7 @@ public class Step  implements Parcelable {
 
     protected Step(Parcel in) {
         id = in.readInt();
-        shortDescrition = in.readString();
+        shortDescription = in.readString();
         description = in.readString();
         video_url = in.readString();
         thumbnailUrl = in.readString();
@@ -43,8 +43,8 @@ public class Step  implements Parcelable {
         return id;
     }
 
-    public String getShortDescrition() {
-        return shortDescrition;
+    public String getShortDescription() {
+        return shortDescription;
     }
 
     public String getDescription() {
@@ -67,7 +67,7 @@ public class Step  implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
-        dest.writeString(shortDescrition);
+        dest.writeString(shortDescription);
         dest.writeString(description);
         dest.writeString(video_url);
         dest.writeString(thumbnailUrl);

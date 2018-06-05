@@ -1,28 +1,20 @@
 package com.example.android.bakingapp.utils;
 
-import android.content.ContentResolver;
-import android.content.Context;
-import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
 
-import com.example.android.bakingapp.utils.Recipe;
-import com.example.android.bakingapp.utils.RecipeJson;
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class NetworkUtils {
+public final class NetworkUtils {
     private static final String TAG = NetworkUtils.class.getSimpleName();
     private static final String UrlBase = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
 
+    private NetworkUtils() {}
 
     public static List<Recipe> getRecipesList() {
         Uri buildUri = Uri.parse(UrlBase);

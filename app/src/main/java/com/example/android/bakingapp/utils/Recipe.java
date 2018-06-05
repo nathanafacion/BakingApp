@@ -3,9 +3,6 @@ package com.example.android.bakingapp.utils;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.example.android.bakingapp.utils.Ingredient;
-import com.example.android.bakingapp.utils.Step;
-
 import java.util.ArrayList;
 
 public class Recipe  implements Parcelable{

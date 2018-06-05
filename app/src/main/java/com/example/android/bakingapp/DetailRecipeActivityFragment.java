@@ -82,7 +82,7 @@ public class DetailRecipeActivityFragment  extends Fragment {
                 View reviewLayout = LayoutInflater.from(getContext()).inflate(R.layout.number_list_steps, detailLayoutStep, false);
                 final TextView stepView = reviewLayout.findViewById(R.id.tv_step);
                 id = String.valueOf(steps.get(i).getId());
-                shortDescription = steps.get(i).getShortDescrition();
+                shortDescription = steps.get(i).getShortDescription();
                 stepView.setText(id + ") " + shortDescription + " ");
                 ImageView thumbnail = reviewLayout.findViewById(R.id.step_thumbnail);
                 if(steps.get(i).getThumbnailUrl() != null && steps.get(i).getThumbnailUrl().isEmpty()== false){

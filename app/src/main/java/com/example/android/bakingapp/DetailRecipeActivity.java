@@ -1,22 +1,11 @@
 package com.example.android.bakingapp;
 
-import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.example.android.bakingapp.utils.Ingredient;
 import com.example.android.bakingapp.utils.Recipe;
-import com.example.android.bakingapp.utils.RecipeWidgetProvider;
 import com.example.android.bakingapp.utils.Step;
 
 import java.util.ArrayList;

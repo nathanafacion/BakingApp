@@ -10,8 +10,6 @@ import java.util.List;
 
 public class StepActivity extends AppCompatActivity {
 
-    private static List<Recipe> recipeList = new ArrayList<Recipe>();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
